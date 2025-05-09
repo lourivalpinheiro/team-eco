@@ -107,7 +107,7 @@ with tab1:
         with fifthCaption:
             st.markdown('''Selecionamos a opção **"OUTROS"** como delimitador e clicamos em avançar e, depois, em **"CONCLUIR"**. ''')
             with st.expander(label="OBS.:", ):
-                st.markdown("Faz-se necessário removermos a primeira coluna e cabeçalho, assim como alterarmos o formato da data.")
+                st.markdown("Faz-se necessário removermos a primeira coluna e cabeçalho.")
                 st.markdown("Em caso de dúvidas, você pode sempre contar com um líder.")
 
     st.success("🥳 **Parabéns!** Você concluiu o processo. Agora é só salvar a planilha e importá-la no sistema.")
