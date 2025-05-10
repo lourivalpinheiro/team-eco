@@ -25,6 +25,9 @@ pg = st.navigation(
 
 pg.run()
 
+with st.sidebar:
+    st.link_button("DEV", url="https://netopinheiro.streamlit.app/", icon="👨🏻‍💻")
+
 # Footer
 footer = """
 <style>
