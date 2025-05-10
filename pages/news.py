@@ -31,9 +31,6 @@ st.divider()
 # News
 with st.expander(label="Barra de navegação"):
     st.write("09/05/2025")
-    if st.button("FEEDBACK"):
-        navigationFeedback()
-        
             
     st.image("static/navigationBar.png")
     st.markdown('''
