@@ -83,7 +83,7 @@ with tab1:
             
             with thirdCaption:
                 st.markdown('''
-                    Ao abrirmos o arquivo, nós deparamos com todos os dados agrupados em uma única coluna, tendo como solução a opção nativa do excel de "Texto para colunas". Para ter acesso à essa funcionalidade, **basta navegar até a aba dados, e selecionar a opção "Texto para colunas"**.
+                    Ao abrirmos o arquivo, nos   deparamos com todos os dados agrupados em uma única coluna, tendo como solução a opção nativa do excel de "Texto para colunas". Para ter acesso à essa funcionalidade, **basta navegar até a aba dados, e selecionar a opção "Texto para colunas"**.
                 ''')
 
             # Picture and text
@@ -156,22 +156,25 @@ with tab2:
             submit = st.form_submit_button(label="ENVIAR")
             # Condition
             if submit:
-                new_data = {
-                    'DEBITO': debit,
-                    'CREDITO': credit,
-                    'DATA': factDate,
-                    'VALOR': amount,
-                    'HISTORICO': description,
-                    'MATRIZ': matrix,
-                    'FILIAL': filial
-                }
-                # New line
-                new_row_df = pd.DataFrame([new_data])
+                if debit == "" or credit == "" or factDate == "" or amount == "" or description == "" or matrix == "" or filial == "":
+                    st.error("❌ Preencha todos os campos!")
+                else:
+                    new_data = {
+                        'DEBITO': debit,
+                        'CREDITO': credit,
+                        'DATA': factDate,
+                        'VALOR': amount,
+                        'HISTORICO': description,
+                        'MATRIZ': matrix,
+                        'FILIAL': filial
+                    }
+                    # New line
+                    new_row_df = pd.DataFrame([new_data])
 
-                # Concatenating
-                st.session_state['df'] = pd.concat([st.session_state['df'], new_row_df], ignore_index=True)
-                st.success("✅ Dados adicionados com sucesso!")
-            
+                    # Concatenating
+                    st.session_state['df'] = pd.concat([st.session_state['df'], new_row_df], ignore_index=True)
+                    st.success("✅ Dados adicionados com sucesso!")
+                
     # Updated datafrane for the user  
     with dataframe:
         st.dataframe(st.session_state["df"])
