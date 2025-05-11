@@ -106,8 +106,14 @@ with tab1:
         
         with fifthCaption:
             st.markdown('''Selecionamos a opção **"OUTROS"** como delimitador e clicamos em avançar e, depois, em **"CONCLUIR"**. ''')
-            with st.expander(label="OBS.:", ):
-                st.markdown("Faz-se necessário removermos a primeira coluna e cabeçalho.")
+            with st.expander(label="OBS.:"):
+                indexImage, indexText = st.columns(2, gap="small")
+                with indexImage:
+                    st.image("static/removerindex.png")
+                
+                with indexText:
+                    st.markdown('''Para baixar a planilha sem a coluna de index, basta colocar o "mouse" em cima da coluna, apertar os três pontos e clicar na opção ***"Hide column"*** (esconder coluna).''')
+                st.markdown("Faz-se necessário removermos o cabeçalho antes de importar.")
                 st.markdown("Em caso de dúvidas, você pode sempre contar com um líder.")
 
     st.success("🥳 **Parabéns!** Você concluiu o processo. Agora é só salvar a planilha e importá-la no sistema.")
