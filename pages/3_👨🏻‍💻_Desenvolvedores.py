@@ -69,7 +69,7 @@ with tab2:
                         ''')
     
     with middle:
-        with st.expander(label="Barra de navegação"):
+        with st.expander(label="Autenticação"):
             st.write("14/05/2025")
             st.image("static/authentication.png")
             st.markdown('''
