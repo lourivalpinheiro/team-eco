@@ -1,12 +1,19 @@
 # IMporting necessary libraries
 import streamlit as st
+from streamlit import switch_page
 
 # Page's main configuration
 st.set_page_config(page_title="Desenvolvedores", page_icon="👨🏻‍💻", layout="centered")
 st.logo("static/teamLogo.png")
 
+# Login state
+if 'authenticated' not in st.session_state or not st.session_state['authenticated']:
+    st.warning("Por favor, faça login para continuar.")
+    st.stop()
+
 # Page's content
 st.markdown("# 👨🏻‍💻 Desenvolvedores")
+st.caption("Conheça o time de desenvolvedores e fique por dentro das atualizações do projeto.")
 st.divider()
 
 # Tabs
@@ -48,14 +55,40 @@ with tab1:
 with tab2:
     st.caption("Novidades do sistema.")
     # News
-    with st.expander(label="Barra de navegação"):
-        st.write("09/05/2025")
-        st.image("static/navigationBar.png")
-        st.markdown('''
-                    Agora você pode navegar entre as páginas do sistema através da barra de navegação na parte superior da tela.
-                    Isso facilita a navegação e torna a sua experiência mais intuitiva. Que tal compartilhar essa novidade com a galera?
-                    ''')
     
+    leftSide, middle, rightSide = st.columns(3, gap="small")
+    
+    with leftSide:
+        ## Navigation Bar
+        with st.expander(label="Barra de navegação"):
+            st.write("09/05/2025")
+            st.image("static/navigationBar.png")
+            st.markdown('''
+                        Agora você pode navegar entre as páginas do sistema através da barra de navegação na parte superior da tela.
+                        Isso facilita a navegação e torna a sua experiência mais intuitiva. Que tal compartilhar essa novidade com a galera?
+                        ''')
+    
+    with middle:
+        with st.expander(label="Barra de navegação"):
+            st.write("14/05/2025")
+            st.image("static/authentication.png")
+            st.markdown('''
+                        A segurança agora é garantida! Autenticação foi inserida com sucesso.
+                        ''')
+
+    with rightSide:
+        with st.expander(label="Acompanhamento do setor de Arquivo"):
+            st.write("14/05/2025")
+            st.image("static/archivespreadsheet.png")
+            st.markdown('''
+                        Agora você pode acompanhar a movimentação das suas empresas e ir ao setor de arquivo sabendo exatamente o que deseja coletar.
+                        ''')
+
+with st.sidebar:
+    logout = st.button("SAIR")
+    if logout:
+        st.session_state['authenticated'] = False
+        switch_page("🏡_Bem-vindo.py")
 
 # Hiding humburguer menu
 hide_st_style = """
