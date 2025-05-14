@@ -179,3 +179,42 @@ with tab2:
     with dataframe:
         st.dataframe(st.session_state["df"])
 
+st.logo("static/teamLogo.png")
+
+with st.sidebar:
+    st.link_button("DEV", url="https://netopinheiro.streamlit.app/", icon="👨🏻‍💻")
+
+# Hiding humburguer menu
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
+
+# Footer
+footer = """
+<style>
+/* Hide default Streamlit footer */
+footer {visibility: hidden;}
+
+.footer-custom {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color: #ffff;
+    padding: 10px 0;
+    margin-top: auto;
+}
+</style>
+
+<div class="footer-custom">
+    © <strong>TEAM CONTABILIDADE<strong/>: Gente que inspira! 
+</div>
+"""
+
+st.markdown(footer, unsafe_allow_html=True)
