@@ -28,6 +28,14 @@ pg.run()
 with st.sidebar:
     st.link_button("DEV", url="https://netopinheiro.streamlit.app/", icon="👨🏻‍💻")
 
+# Hiding humburguer menu
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
+
 # Footer
 footer = """
 <style>
