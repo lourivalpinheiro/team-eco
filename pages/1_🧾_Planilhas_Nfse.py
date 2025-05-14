@@ -181,9 +181,6 @@ with tab2:
 
 st.logo("static/teamLogo.png")
 
-with st.sidebar:
-    st.link_button("DEV", url="https://netopinheiro.streamlit.app/", icon="👨🏻‍💻")
-
 # Hiding humburguer menu
 hide_st_style = """
             <style>
