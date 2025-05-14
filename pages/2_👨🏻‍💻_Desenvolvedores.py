@@ -50,7 +50,7 @@ with tab2:
     # News
     with st.expander(label="Barra de navegação"):
         st.write("09/05/2025")
-        st.image("static/navigationbar.png")
+        st.image("static/navigationBar.png")
         st.markdown('''
                     Agora você pode navegar entre as páginas do sistema através da barra de navegação na parte superior da tela.
                     Isso facilita a navegação e torna a sua experiência mais intuitiva. Que tal compartilhar essa novidade com a galera?
