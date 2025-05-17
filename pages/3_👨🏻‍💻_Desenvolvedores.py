@@ -50,7 +50,7 @@ with tab1:
 
                     - Automação de processos.
                     ''')
-            st.link_button("PORTFOLIO", url="https://ltpneto.streamlit.app/Curr%C3%ADculo")
+            st.link_button("PORTFOLIO", url="https://ltpneto.streamlit.app/")
 
 with tab2:
     st.caption("Novidades do sistema.")
