@@ -17,3 +17,21 @@ data = {
 
 ## Creating dataframe
 df = pd.DataFrame(data)
+
+# Credentials 
+conn = st.connection("gsheets", type=GSheetsConnection)
+credentialsAccountingsSpreadSheet = conn.read(
+    spreadsheet= st.secrets['database']['accountingsSpreadSheet']
+)
+
+# Google API
+@st.cache_data
+def archiveConnect():
+    '''
+    Connects to Google API and displays content from a Google Spreadsheet.
+    '''
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    archiveSpreadSheet = conn.read(
+        spreadsheet= st.secrets['database']['spreadsheetArchive']
+    )
+    return archiveSpreadSheet

@@ -1,13 +1,21 @@
 # Importing necessary libraries
 import streamlit as st
+from streamlit import switch_page
 import pandas as pd
 from model import df
 
 # Page's main configuration
-st.set_page_config(page_title="Planilhas Nfse", page_icon="🧾", layout="wide")
-st.markdown("# 🧾 Planilhas NFSe")
+st.set_page_config(page_title="Contábil", page_icon="📝", layout="wide")
+st.logo("static/teamLogo.png")
 
-st.divider()
+# Login state
+if 'authenticated' not in st.session_state or not st.session_state['authenticated']:
+    st.warning("Por favor, faça login para continuar.")
+    st.stop()
+
+st.markdown("# 📝 Contábil")
+st.caption("Utilize as ferramentas desenvolvidas para o setor.")
+tab1 = st.tabs(["🧾 PLANILHAS NFSE"])
 
 # Tabs
 tab1, tab2 = st.tabs(["MANUAL", "FERRAMENTA"])
@@ -179,7 +187,11 @@ with tab2:
     with dataframe:
         st.dataframe(st.session_state["df"])
 
-st.logo("static/teamLogo.png")
+with st.sidebar:
+    logout = st.button("SAIR")
+    if logout:
+        st.session_state['authenticated'] = False
+        switch_page("🏡_Bem-vindo.py")
 
 # Hiding humburguer menu
 hide_st_style = """
