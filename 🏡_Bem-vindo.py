@@ -37,15 +37,6 @@ with formLogin:
                 else:
                     st.error("❌ Usuário não encontrado.")
 
-        
-        with st.popover(label="⚠️ AVISOS"):
-            st.warning('''
-                    
-            1. Apenas alguns membros do setor Contábil e a pessoa responsável pelo setor de Arquivos podem acessar este app por enquanto;
-                    
-            2. Esta é uma versão beta. Por favor, avise os desenvolvedores caso identifique bugs.
-                    ''')
-                
 with textLogin:
     # Greeting message
     st.markdown('''
