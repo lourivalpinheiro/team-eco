@@ -17,6 +17,13 @@ data = {
 
 ## Creating dataframe
 df = pd.DataFrame(data)
+    
+# Users' amount
+usersAmountData = {
+    'Quantidade de usuários': [13],
+    'Data': ['22/05/2025']
+}
+usersAmount = pd.DataFrame(usersAmountData)
 
 # Credentials 
 conn = st.connection("gsheets", type=GSheetsConnection)

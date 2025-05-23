@@ -222,7 +222,7 @@ footer {visibility: hidden;}
 </style>
 
 <div class="footer-custom">
-    © <strong>TEAM CONTABILIDADE<strong/>: Gente que inspira! 
+    © <strong>TEAM CONTABILIDADE<strong/> - All rights reserved
 </div>
 """
 

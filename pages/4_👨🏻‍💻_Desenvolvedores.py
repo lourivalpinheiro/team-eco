@@ -56,7 +56,7 @@ with tab2:
     st.caption("Novidades do sistema.")
     # News
     
-    leftSide, middle, rightSide = st.columns(3, gap="small")
+    leftSide, rightSide = st.columns(2, gap="small")
     
     with leftSide:
         ## Navigation Bar
@@ -67,22 +67,35 @@ with tab2:
                         Agora você pode navegar entre as páginas do sistema através da barra de navegação na parte superior da tela.
                         Isso facilita a navegação e torna a sua experiência mais intuitiva. Que tal compartilhar essa novidade com a galera?
                         ''')
+
+        # Archive follow-up
+        with st.expander(label="Acompanhamento do setor de Arquivo"):
+                st.write("14/05/2025")
+                st.image("static/archivespreadsheet.png")
+                st.markdown('''
+                            Agora você pode acompanhar a movimentação das suas empresas e ir ao setor de arquivo sabendo exatamente o que deseja coletar.
+                            ''')
+   
     
-    with middle:
-        with st.expander(label="Autenticação"):
-            st.write("14/05/2025")
-            st.image("static/authentication.png")
-            st.markdown('''
-                        A segurança agora é garantida! Autenticação foi inserida com sucesso.
-                        ''')
 
     with rightSide:
-        with st.expander(label="Acompanhamento do setor de Arquivo"):
-            st.write("14/05/2025")
-            st.image("static/archivespreadsheet.png")
-            st.markdown('''
-                        Agora você pode acompanhar a movimentação das suas empresas e ir ao setor de arquivo sabendo exatamente o que deseja coletar.
-                        ''')
+        # Authentication
+            with st.expander(label="Autenticação"):
+                st.write("14/05/2025")
+                st.image("static/authentication.png")
+                st.markdown('''
+                            A segurança agora é garantida! Autenticação foi inserida com sucesso.
+                            ''')
+    
+            ## Analysis Dashboard
+            with st.expander(label="Análises do app"):
+                st.write("22/05/2025")
+                st.image("static/analisesApp.png")
+                st.markdown('''
+                            Agora é possível obter dados a respeito da usabilidade do aplicativo.
+                            ''')
+            
+      
 
 with st.sidebar:
     logout = st.button("SAIR")
@@ -119,7 +132,7 @@ footer {visibility: hidden;}
 </style>
 
 <div class="footer-custom">
-    © <strong>TEAM CONTABILIDADE<strong/>: Gente que inspira! 
+    © <strong>TEAM CONTABILIDADE<strong/> - All rights reserved
 </div>
 """
 

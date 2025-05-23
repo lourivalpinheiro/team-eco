@@ -1,10 +1,10 @@
 # Importing necessary libraries
 import streamlit as st
 from streamlit import switch_page
-from model import archiveConnect
+from plots import usersAmountFig
 
 # Page's main configuration
-st.set_page_config(page_title="Arquivo", page_icon="📂", layout="wide")
+st.set_page_config("Análises do app", page_icon='📊', layout='wide')
 st.logo("static/teamLogo.png")
 
 # Login state
@@ -13,28 +13,17 @@ if 'authenticated' not in st.session_state or not st.session_state['authenticate
     st.stop()
 
 # Page's content
-st.markdown("# 📂 Arquivo")
-st.caption("Acompanhe a movimentação dos documentos das empresas pelas quais é responsável.")
+st.markdown('# 📊 Análises')
 st.divider()
-
-# Spreadsheet
-st.dataframe(archiveConnect())
-
-# Update button
-def refreshArchiveData():
-    '''
-    Refreshes data from the Google API Spreadsheet
-    '''
-    st.cache_data.clear()
-    
-st.button(label="ATUALIZAR", on_click=refreshArchiveData)
-
+with st.container(height=490):
+    st.plotly_chart(usersAmountFig)
 
 with st.sidebar:
     logout = st.button("SAIR")
     if logout:
         st.session_state['authenticated'] = False
         switch_page("🏡_Bem-vindo.py")
+
 
 # Hiding humburguer menu
 hide_st_style = """
@@ -65,7 +54,7 @@ footer {visibility: hidden;}
 </style>
 
 <div class="footer-custom">
-    © <strong>TEAM CONTABILIDADE<strong/>: Gente que inspira! 
+    © <strong>TEAM CONTABILIDADE<strong/> - All rights reserved
 </div>
 """
 
