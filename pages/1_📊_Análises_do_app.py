@@ -13,7 +13,7 @@ if 'authenticated' not in st.session_state or not st.session_state['authenticate
     st.stop()
 
 # Page's content
-st.markdown('# 📊 Análises')
+st.markdown('# 📊 Análises do app')
 st.divider()
 with st.container(height=490):
     st.plotly_chart(usersAmountFig)
