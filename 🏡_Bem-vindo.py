@@ -31,7 +31,7 @@ with formLogin:
                     # Now that I've minimized the potential errors, I validate it.
                     if senha_digitada == senha_salva:
                         st.session_state['authenticated'] = True
-                        switch_page("pages/2_📝_Contábil.py")
+                        switch_page("pages/3_📝_Contábil.py")
                     else:
                         st.error(" ❌ Senha incorreta.")
                 else:
@@ -87,7 +87,7 @@ footer {visibility: hidden;}
 </style>
 
 <div class="footer-custom">
-    © <strong>TEAM CONTABILIDADE<strong/>: Gente que inspira! 
+    © <strong>TEAM CONTABILIDADE<strong/> - All rights reserved
 </div>
 """
 
