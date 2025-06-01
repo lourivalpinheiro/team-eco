@@ -1,7 +1,5 @@
 # Importing necessary libraries
 import pandas as pd
-import streamlit as st
-from streamlit_gsheets import GSheetsConnection
 
 # Data logic 
 ## Dataframe data
@@ -25,20 +23,3 @@ usersAmountData = {
 }
 usersAmount = pd.DataFrame(usersAmountData)
 
-# Credentials 
-conn = st.connection("gsheets", type=GSheetsConnection)
-credentialsAccountingsSpreadSheet = conn.read(
-    spreadsheet= st.secrets['database']['accountingsSpreadSheet']
-)
-
-# Google API
-@st.cache_data
-def archiveConnect():
-    '''
-    Connects to Google API and displays content from a Google Spreadsheet.
-    '''
-    conn = st.connection("gsheets", type=GSheetsConnection)
-    archiveSpreadSheet = conn.read(
-        spreadsheet= st.secrets['database']['spreadsheetArchive']
-    )
-    return archiveSpreadSheet
