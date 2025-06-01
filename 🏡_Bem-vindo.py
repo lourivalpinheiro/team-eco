@@ -1,11 +1,20 @@
-# Importing necessary libraries
-import streamlit as st
+# Importing necessary modules
+import pandas as pd
 from streamlit import switch_page
+from classes.backend.data.googleapi.apiattributeconnection import ApiConnectionAttributeConnection
+from classes.ui.pages import Page
+from classes.ui.logo import Logo
+from classes.ui.footer import Footer
+from classes.ui.headermenu import HeaderMenu
+import streamlit as st
 from model import *
 
 # Page's main configuration
-st.set_page_config("Bem-vindos", page_icon="🏡", layout="wide")
-st.logo("static/teamLogo.png")
+Page(name='Bem-vindos', icon='🏡', page_layout='wide')
+Logo("static/teamLogo.png")
+
+# Api connection
+credentialsConnection = ApiConnectionAttributeConnection.spreadsheet_content
 
 # Authentication
 formLogin, textLogin = st.columns([1, 2])
@@ -21,7 +30,7 @@ with formLogin:
                 st.warning("⚠️ Preencha todos os campos.")
             else:
                 # Verifying if user exists within the spreadsheet
-                user_row = credentialsAccountingsSpreadSheet[credentialsAccountingsSpreadSheet['username'] == username]
+                user_row = credentialsConnection[credentialsConnection['username'] == username]
                 
                 if not user_row.empty:
                     # Strip to remove extra spaces
@@ -39,7 +48,7 @@ with formLogin:
 
 with textLogin:
     # Greeting message
-    st.markdown('''
+    st.markdown("""
         # 👋 Olá, sejam bem-vindos!
         ---
         É um prazer ter vocês aqui no nosso app desenvolvido com muito carinho para facilitar nosso dia a dia no escritório.
@@ -55,40 +64,7 @@ with textLogin:
         ✅ Deixar nosso trabalho mais leve e eficiente
 
         Fiquem à vontade para explorar! Se houver dúvidas ou sugestões, estamos por aqui para ouvir vocês. Fiquem sempre por dentro das novidades e atualizações do projeto na guia "👨🏻‍💻 Desenvolvedores".
-                ''')
+                """)
 
-
-# Hiding humburguer menu
-hide_st_style = """
-            <style>
-            #MainMenu {visibility: hidden;}
-            footer {visibility: hidden;}
-            header {visibility: hidden;}
-            </style>
-            """
-st.markdown(hide_st_style, unsafe_allow_html=True)
-
-# Footer
-footer = """
-<style>
-/* Hide default Streamlit footer */
-footer {visibility: hidden;}
-
-.footer-custom {
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    font-size: 14px;
-    color: #ffff;
-    padding: 10px 0;
-    margin-top: auto;
-}
-</style>
-
-<div class="footer-custom">
-    © <strong>TEAM CONTABILIDADE<strong/> - All rights reserved
-</div>
-"""
-
-st.markdown(footer, unsafe_allow_html=True)
+HeaderMenu.hide_menu()
+Footer.footer()
