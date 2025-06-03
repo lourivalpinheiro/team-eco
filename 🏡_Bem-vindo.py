@@ -1,12 +1,10 @@
 # Importing necessary modules
-import pandas as pd
 from streamlit import switch_page
 from classes.backend.data.googleapi.apiattributeconnection import ApiConnectionAttributeConnection
 from classes.ui.pages import Page
 from classes.ui.logo import Logo
 from classes.ui.footer import Footer
 from classes.ui.headermenu import HeaderMenu
-import streamlit as st
 from model import *
 
 # Page's main configuration
@@ -20,7 +18,7 @@ credentialsConnection = ApiConnectionAttributeConnection.spreadsheet_content
 formLogin, textLogin = st.columns([1, 2])
 
 with formLogin:
-    with st.form(key='login_form'):
+    with st.form(key='login_form', enter_to_submit=False):
         username = st.text_input("USUÁRIO", placeholder="Digite seu usuário")
         password = st.text_input("SENHA", type="password", placeholder="Digite sua senha")
         submitted = st.form_submit_button("ENTRAR")
