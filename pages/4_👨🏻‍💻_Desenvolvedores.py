@@ -77,6 +77,14 @@ with tab2:
                 st.markdown('''
                             Agora você pode acompanhar a movimentação das suas empresas e ir ao setor de arquivo sabendo exatamente o que deseja coletar.
                             ''')
+
+        # Archive filter
+        with st.expander(label="Filtro do acompanhamento do setor de Arquivo"):
+            st.write("02/06/2025")
+            st.image("static/archiveFilter.png")
+            st.markdown('''
+                        Agora você pode filtrar o acompanhamento do setor de Arquivo por competência. 
+                        ''')
    
     
 
