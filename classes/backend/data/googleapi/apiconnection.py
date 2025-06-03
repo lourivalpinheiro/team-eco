@@ -17,7 +17,10 @@ class ApiConnection(ApiData):
         """
         Connects to Google API and displays content from a Google Spreadsheet.
         """
+
+    def api_connect(self):
         conn = st.connection("gsheets", type=GSheetsConnection)
         spreadsheet_content = conn.read(
             spreadsheet=st.secrets[self.database][self.spreadsheet]
         )
+        return spreadsheet_content
