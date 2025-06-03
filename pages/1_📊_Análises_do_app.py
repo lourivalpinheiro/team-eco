@@ -9,6 +9,7 @@ from classes.backend.data.analysis.plots import usersAmountFig
 
 # Page's main configuration
 Page("Análises do app", icon='📊', page_layout='wide')
+HeaderMenu.hide_menu()
 Logo("static/teamLogo.png")
 
 # Login state
@@ -25,5 +26,4 @@ with st.sidebar:
     if logout:
         Authentication.logout()
 
-HeaderMenu.hide_menu()
 Footer.footer()

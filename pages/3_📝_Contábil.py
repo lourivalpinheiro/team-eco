@@ -10,6 +10,7 @@ from model import df
 
 # Page's main configuration
 Page(name="Contábil", icon="📝", page_layout="wide")
+HeaderMenu.hide_menu()
 Logo("static/teamLogo.png")
 
 # Login state
@@ -195,5 +196,4 @@ with st.sidebar:
     if logout:
         Authentication.logout()
 
-HeaderMenu.hide_menu()
 Footer.footer()

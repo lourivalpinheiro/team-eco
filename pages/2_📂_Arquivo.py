@@ -6,12 +6,12 @@ from classes.ui.logo import Logo
 from classes.ui.footer import Footer
 from classes.ui.headermenu import HeaderMenu
 from classes.backend.authentication import Authentication
-from classes.backend.data.googleapi.apidataretrieval import DataRetrieval
 from model import spreadsheet_content
 
 
 # Page's main configuration
 Page(name="Arquivo", icon="📂", page_layout="wide")
+HeaderMenu.hide_menu()
 Logo("static/teamLogo.png")
 
 # Login state
@@ -27,8 +27,6 @@ dataframeAPI = pd.DataFrame(spreadsheet_content)
 if 'dataframeAPI' not in st.session_state:
     st.session_state['dataframeAPI'] = dataframeAPI
 
-
-# Spreadsheet Filter UI
 options = sorted(dataframeAPI['COMPETÊNCIA'].str.strip().dropna().unique().tolist())
 
 selected = st.selectbox(
@@ -43,6 +41,9 @@ selected = st.selectbox(
 filtered_df = dataframeAPI[dataframeAPI['COMPETÊNCIA'] == selected]
 st.dataframe(filtered_df)
 
+if 'filtered_df' not in st.session_state:
+    st.session_state['filtered_df'] = filtered_df
+
 if st.session_state['archiveSelect'] == options:
     st.session_state['dataframeAPI'] = options
 
@@ -51,5 +52,4 @@ with st.sidebar:
     if logout:
         Authentication.logout()
 
-HeaderMenu.hide_menu()
 Footer.footer()
