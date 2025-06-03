@@ -1,6 +1,7 @@
 # Importing necessary libraries
 import pandas as pd
-
+import streamlit as st
+from streamlit_gsheets import GSheetsConnection
 # Data logic 
 ## Dataframe data
 data = {
@@ -22,4 +23,9 @@ usersAmountData = {
     'Data': ['22/05/2025']
 }
 usersAmount = pd.DataFrame(usersAmountData)
+
+conn = st.connection("gsheets", type=GSheetsConnection)
+spreadsheet_content = conn.read(
+    spreadsheet=st.secrets['database']['spreadsheetArchive']
+)
 

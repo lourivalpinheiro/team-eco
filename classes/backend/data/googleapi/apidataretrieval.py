@@ -1,4 +1,6 @@
 # Importing necessary modules
+import pandas as pd
+
 from classes.backend.data.googleapi.apiconnection import ApiConnection
 from streamlit_gsheets import GSheetsConnection
 import streamlit as st
@@ -15,7 +17,8 @@ class DataRetrieval(ApiConnection):
     def __init__(self, database: str, spreadsheet: str):
         super().__init__(database, spreadsheet)
 
-    def retrieve_data(self):
+
+    def retrieve_data(self) -> pd.DataFrame:
         """
         Retrieves data from a Google Spreadsheet.
         """
