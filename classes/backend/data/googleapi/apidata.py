@@ -12,3 +12,5 @@ class ApiData:
     def __init__(self, database: str, spreadsheet: str):
         self.database = database
         self.spreadsheet = spreadsheet
+
+

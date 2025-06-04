@@ -24,3 +24,9 @@ class ApiConnection(ApiData):
             spreadsheet=st.secrets[self.database][self.spreadsheet]
         )
         return spreadsheet_content
+
+# Entrepreneurs' spreadsheet
+entrepreneursConn = st.connection("gsheets", type=GSheetsConnection)
+entrepreneursSpreadSheet = entrepreneursConn.read(
+    spreadsheet=st.secrets['database']['mahinaSpreadsheet']
+)
