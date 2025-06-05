@@ -73,7 +73,7 @@ salespersonOptions = sorted(entrepreneurDataframe['vendedor'].str.strip().dropna
 employeeOptions = sorted(entrepreneurDataframe['colaborador'].str.strip().dropna().unique().tolist())
 periodOptions = (entrepreneurDataframe['mes'].str.strip().dropna().unique().tolist())
 
-@st.dialog('🧾 Relatório de compras')
+@st.dialog('🧾 Relatório de vendas')
 def get_employee_receipt():
     if 'isPrinted' not in st.session_state or not st.session_state['isPrinted']:
         with (st.form('confirmation', enter_to_submit=False)):
@@ -92,7 +92,7 @@ def get_employee_receipt():
                         (entrepreneurDataframe['mes'] == month)
                     ).sum()
 
-                    with st.expander('🧾 COMPRAS DO MÊS'):
+                    with st.expander('🧾 VENDAS DO MÊS'):
                         employeesColumn, entreprenursColumn, monthColumn, totalOrderingColumn = st.columns(4, gap='large')
                         with employeesColumn:
                             st.markdown(f"##### Cliente: {employeeName}")
@@ -116,7 +116,7 @@ def get_employee_receipt():
 # Archive Spreadsheet
 tab1, tab2 = st.tabs(['Acompanhamento de vendas', 'Dashboard de vendas'])
 with tab1:
-    get_employee_receipt_button = st.button('🧾 Relatório de compras', on_click=get_employee_receipt)
+    get_employee_receipt_button = st.button('🧾 RELATÓRIO DE VENDAS', on_click=get_employee_receipt)
     selectedSalesperson = st.selectbox(
         label='VENDEDOR',
         placeholder='Selecione uma opção...',
