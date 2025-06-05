@@ -5,26 +5,25 @@ from classes.ui.logo import Logo
 from classes.ui.footer import Footer
 from classes.backend.authentication import Authentication
 from classes.backend.data.googleapi.apiconnection import entrepreneursSpreadSheet
+from classes.backend.data.googleapi.apientrepreneursconnection import entrepreneursSpreadSheetCredentials
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import tempfile
-
 
 # Page's second auth
 if 'entreprenur' not in st.session_state or not st.session_state['entreprenur']:
-    entrepreneurPage = Page('Empreendedores', icon='👩🏽‍💼', page_layout='centered')
+    Page('Empreendedores Login', icon='👩🏽‍💼', page_layout='centered')
     Authentication.authenticate()
     # Page's main configuration
     HeaderMenu.hide_menu()
     Logo('static/teamLogo.png')
 
-    # Page's first auth
-    username = 'admin'
-    password = '123'
+    # Api connection
+    credentialsConnection = entrepreneursSpreadSheetCredentials
+
     # Page's header
     st.markdown("# 👩🏽‍💼 Empreendedores")
-    st.caption('Um espaço seguro e confiável para empreendedores analisarem os dados de seus negócios.')
+    st.caption('Um espaço seguro e confiável para Empreendedores Team analisarem os dados de seus negócios.')
     st.divider()
     with st.form("entreprenurForm"):
         entreprenurUsername = st.text_input("USUÁRIO")
@@ -35,14 +34,26 @@ if 'entreprenur' not in st.session_state or not st.session_state['entreprenur']:
             if not entreprenurUsername or not entreprenurPassword:
                 st.warning('Preencha todos os campos')
             else:
-                if entreprenurUsername == username and entreprenurPassword == password:
-                    st.session_state['entreprenur'] = True
-                    st.rerun()
+                # Verifying if user exists within the spreadsheet
+                user_row = credentialsConnection[credentialsConnection['username'] == entreprenurUsername]
 
+                if not user_row.empty:
+                    # Strip to remove extra spaces
+                    entreprenurPassword = entreprenurPassword.strip()
+                    entrepreneursavedPassword = str(user_row.iloc[0]['password']).strip()
+
+                    # Now that I've minimized the potential errors, I validate it.
+                    if entreprenurPassword == entrepreneursavedPassword:
+                        st.session_state['entreprenur'] = True
+                        st.rerun()
+                    else:
+                        st.error(" ❌ Senha incorreta.")
+                else:
+                    st.error("❌ Usuário não encontrado.")
     st.stop()
 
 # Page's main configuration after logging in
-entrepreneurPage = Page('Empreendedores', icon='👩🏽‍💼', page_layout='wide')
+Page(name='Empreendedores Dashboard', icon='👩🏽‍💼', page_layout='wide')
 HeaderMenu.hide_menu()
 Logo('static/teamLogo.png')
 

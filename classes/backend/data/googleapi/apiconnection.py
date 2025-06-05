@@ -25,6 +25,7 @@ class ApiConnection(ApiData):
         )
         return spreadsheet_content
 
+
 # Entrepreneurs' spreadsheet
 entrepreneursConn = st.connection("gsheets", type=GSheetsConnection)
 entrepreneursSpreadSheet = entrepreneursConn.read(
