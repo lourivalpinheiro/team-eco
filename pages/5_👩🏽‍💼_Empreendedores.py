@@ -8,6 +8,8 @@ from classes.backend.data.googleapi.apiconnection import entrepreneursSpreadShee
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import tempfile
+
 
 # Page's second auth
 if 'entreprenur' not in st.session_state or not st.session_state['entreprenur']:
@@ -39,10 +41,14 @@ if 'entreprenur' not in st.session_state or not st.session_state['entreprenur']:
 
     st.stop()
 
+# Page's main configuration after logging in
 entrepreneurPage = Page('Empreendedores', icon='👩🏽‍💼', page_layout='wide')
 HeaderMenu.hide_menu()
+Logo('static/teamLogo.png')
+
+# Page's header after logging in
 st.markdown("# 👩🏽‍💼 Empreendedores")
-st.caption('Um espaço seguro e confiável para empreendedores analisarem os dados de seus negócios.')
+st.caption('Um espaço seguro e confiável para Empreendedores Team analisarem os dados de seus negócios.')
 st.divider()
 
 # Dataframe
@@ -53,33 +59,59 @@ if 'entrepreneurs' not in st.session_state:
     st.session_state['entrepreneurs'] = entrepreneurDataframe
 
 salespersonOptions = sorted(entrepreneurDataframe['vendedor'].str.strip().dropna().unique().tolist())
+employeeOptions = sorted(entrepreneurDataframe['colaborador'].str.strip().dropna().unique().tolist())
+periodOptions = (entrepreneurDataframe['mes'].str.strip().dropna().unique().tolist())
 
-# @st.dialog('Verificação do empreendedor.')
-# def verify_entreprenur_selection():
-#     with st.form('confirmation', enter_to_submit=False):
-#         entreprenurAuthUsername = st.text_input("USUÁRIO")
-#         entreprenurAuthPassword = st.text_input("SENHA", type="password")
-#         isEntreprenurAuthLoginSubmitted = st.form_submit_button('VERIRIFCAR')
-#
-#         if isEntreprenurAuthLoginSubmitted:
-#             if not entreprenurAuthPassword:
-#                 st.warning('Preencha todos os campos')
-#             else:
-#                 if entreprenurAuthUsername == 'Mahina' and  entreprenurAuthPassword == '123':
-#                     st.rerun()
-#
-#     st.stop()
+@st.dialog('🧾 Relatório de compras')
+def get_employee_receipt():
+    if 'isPrinted' not in st.session_state or not st.session_state['isPrinted']:
+        with (st.form('confirmation', enter_to_submit=False)):
+            employeeName = st.selectbox("CLIENTE", options=employeeOptions, index=None, placeholder='Selecione um cliente...')
+            entreprenurSelection = st.selectbox("EMPREENDEDOR", options=salespersonOptions, index=None, placeholder='Selecione o empreendedor...')
+            month = st.selectbox("PERÍODO", options=periodOptions, index=None, placeholder='Selecione o período...')
+            printReport = st.form_submit_button('EMITIR')
+
+            if printReport:
+                if not employeeName or not month:
+                    st.warning('⚠️ Preencha todos os campos')
+                else:
+                    total_ordering_sum = entrepreneurDataframe['valor'].where(
+                        (entrepreneurDataframe['colaborador'] == employeeName) &
+                        (entrepreneurDataframe['vendedor'] == entreprenurSelection) &
+                        (entrepreneurDataframe['mes'] == month)
+                    ).sum()
+
+                    with st.expander('🧾 COMPRAS DO MÊS'):
+                        employeesColumn, entreprenursColumn, monthColumn, totalOrderingColumn = st.columns(4, gap='large')
+                        with employeesColumn:
+                            st.markdown(f"##### Cliente: {employeeName}")
+
+                        with entreprenursColumn:
+                            st.markdown(f"##### Empreendedor: {entreprenurSelection}")
+
+                        with monthColumn:
+                            st.markdown(f"##### Período: {month}")
+
+                        with totalOrderingColumn:
+                            st.markdown(f"##### Valor: R$  {total_ordering_sum:.2f}")
+
+                        spreashsheetEmployee = entrepreneurDataframe[
+                        (entrepreneurDataframe['colaborador'] == employeeName) &
+                        (entrepreneurDataframe['vendedor'] == entreprenurSelection) &
+                        (entrepreneurDataframe['mes'] == month)]
+                        st.dataframe(spreashsheetEmployee)
+
 
 # Archive Spreadsheet
 tab1, tab2 = st.tabs(['Acompanhamento de vendas', 'Dashboard de vendas'])
 with tab1:
+    get_employee_receipt_button = st.button('🧾 Relatório de compras', on_click=get_employee_receipt)
     selectedSalesperson = st.selectbox(
         label='VENDEDOR',
         placeholder='Selecione uma opção...',
         options=salespersonOptions,
         index=None,
-        key='entrepreneursFilter',
-        # on_change=verify_entreprenur_selection
+        key='entrepreneursFilter'
     )
     filtered_df = entrepreneurDataframe[entrepreneurDataframe['vendedor'] == selectedSalesperson]
     st.dataframe(filtered_df)
