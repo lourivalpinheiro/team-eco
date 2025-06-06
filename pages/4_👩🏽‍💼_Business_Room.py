@@ -3,7 +3,6 @@ from classes.ui.pages import Page
 from classes.ui.headermenu import HeaderMenu
 from classes.ui.logo import Logo
 from classes.ui.footer import Footer
-from classes.backend.authentication import Authentication
 from classes.backend.data.googleapi.apiconnection import entrepreneursSpreadSheet
 from classes.backend.data.googleapi.apientrepreneursconnection import entrepreneursSpreadSheetCredentials
 import streamlit as st
@@ -13,8 +12,7 @@ import plotly.express as px
 # Page's second auth
 if 'entreprenur' not in st.session_state or not st.session_state['entreprenur']:
     Page('Business Room Login', icon='👩🏽‍💼', page_layout='centered')
-    Authentication.authenticate()
-    # Page's main configuration
+    Page(name='Business Room', icon='👩🏽‍💼', page_layout='wide')
     HeaderMenu.hide_menu()
     Logo('static/teamLogo.png')
 
