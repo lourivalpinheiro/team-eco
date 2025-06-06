@@ -194,12 +194,25 @@ with tab1:
             st.dataframe(st.session_state["df"])
 
 with tab2:
+    
     st.markdown('## Acompanhamento de empresas')
     st.caption('Fique por dentro do progresso das atividades para fechamento.')
+    st.info('**OBS.:** todos os filtros precisam ter uma opção selecionada para funcionar.', icon='ℹ️')
+
     st.divider()
 
     # Spreadhseet
-    companiesOptionsColumn, employeeOptionsColumn, statusOptions, filterButton = st.columns(4, gap="medium")
+    companiesOptionsColumn, employeeOptionsColumn, statusOptions = st.columns(3, gap="medium")
+
+    with st.popover('LEGENDA'):
+        st.markdown("""
+            **🏢 EMPRESA**: empresa a qual deseja acompanhar;
+            
+            **🙋🏽‍♀️ RESPONSÁVEL**: responsável pela empresa;
+            
+            **🏷️ STATUS**: situação da operação realizada.
+        """)
+
     with companiesOptionsColumn:
         companiesOptions = sorted(companiesFollowup_spreadsheet_content['empresa'].str.strip().dropna().unique().tolist())
         selectedCompany = st.selectbox(
@@ -231,13 +244,10 @@ with tab2:
             key='statusFollowUpFilter'
         )
 
-    with filterButton:
-        filterCompaniesFollowup = st.button('Filtrar')
-        if filterCompaniesFollowup:
-            companiesFollowup_spreadsheet_content = companiesFollowup_spreadsheet_content[
-                            (companiesFollowup_spreadsheet_content['empresa'] == selectedCompany) &
-                            (companiesFollowup_spreadsheet_content['responsavel'] == selectedEmployee) &
-                            (companiesFollowup_spreadsheet_content['status'] == selectedStatus)]
+    companiesFollowup_spreadsheet_content = companiesFollowup_spreadsheet_content[
+        (companiesFollowup_spreadsheet_content['empresa'] == selectedCompany) &
+        (companiesFollowup_spreadsheet_content['responsavel'] == selectedEmployee) &
+        (companiesFollowup_spreadsheet_content['status'] == selectedStatus)]
     st.dataframe(companiesFollowup_spreadsheet_content)
 
 with st.sidebar:
