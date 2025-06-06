@@ -27,7 +27,7 @@ with tab1:
     with st.expander(label="☕ NETO PINHEIRO"):
         netoPicture, netoText = st.columns([1, 2])
         with netoPicture:
-            st.image("static/netopinheiro.jpeg", width=200)
+            st.image("static/netopinheiro.jpeg", width=200, caption='Team One Founder')
         with netoText:
             st.markdown("## 🤖 Cientista de Dados")
             st.caption("Apaixonado por transformar dados em soluções reais para negócios.")
