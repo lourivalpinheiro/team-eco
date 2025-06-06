@@ -12,7 +12,6 @@ import plotly.express as px
 # Page's second auth
 if 'entreprenur' not in st.session_state or not st.session_state['entreprenur']:
     Page('Business Room Login', icon='👩🏽‍💼', page_layout='centered')
-    Page(name='Business Room', icon='👩🏽‍💼', page_layout='wide')
     HeaderMenu.hide_menu()
     Logo('static/teamLogo.png')
 
