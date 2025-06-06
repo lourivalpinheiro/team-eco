@@ -17,6 +17,7 @@ credentialsConnection = ApiConnectionAttributeConnection.spreadsheet_content
 # Welcome text
 st.markdown("# 🚀 Team One")
 st.caption('Todos os setores, um só time.')
+
 # Authentication
 with st.form(key='login_form', enter_to_submit=False):
     username = st.text_input("USUÁRIO", placeholder="Digite seu usuário")
@@ -28,7 +29,7 @@ with st.form(key='login_form', enter_to_submit=False):
             st.warning("⚠️ Preencha todos os campos.")
         else:
             # Verifying if user exists within the spreadsheet
-            user_row = credentialsConnection[credentialsConnection['username'] == username]
+            user_row = credentialsConnection[credentialsConnection["username"] == username]
 
             if not user_row.empty:
                 # Strip to remove extra spaces

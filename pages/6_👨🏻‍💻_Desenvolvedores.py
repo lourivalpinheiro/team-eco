@@ -121,6 +121,14 @@ with tab2:
                 st.markdown('''
                             Um espaço seguro e confiável para Empreendedores Team analisarem os dados de seus negócios.
                             ''')
+
+            ## Notifications
+            with st.expander(label="Notificações"):
+                st.write("05/06/2025")
+                st.image("static/notifications.png")
+                st.markdown('''
+                            Cada aba de setor recebeu a barra de notificações. Fique por dentro dos principais avisos.
+                            ''')
             
       
 

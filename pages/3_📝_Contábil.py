@@ -7,6 +7,7 @@ from classes.ui.footer import Footer
 from classes.ui.headermenu import HeaderMenu
 from classes.backend.authentication import Authentication
 from classes.backend.data.googleapi.apicompaniesfollowup import companiesFollowup_spreadsheet_content
+from streamlit_gsheets import GSheetsConnection
 from model import df
 
 # Page's main configuration
@@ -20,6 +21,39 @@ Authentication.authenticate()
 # Page's content
 st.markdown("# 📝 Contábil")
 st.caption("Utilize as ferramentas desenvolvidas para o setor.")
+
+# Notifications
+AccountingsNotificationsSpreadSheet = st.connection("gsheets", type=GSheetsConnection)
+AccountingsNotificationContent = AccountingsNotificationsSpreadSheet.read(
+    spreadsheet=st.secrets['database']['accountingsSpreadSheet'],
+    worksheet=st.secrets['database']['accountingsNotifications'],
+)
+
+notificationsAmount = AccountingsNotificationContent['Aviso'].count()
+with st.expander(f"🔔 NOTIFICAÇÕES: {notificationsAmount}"):
+    monthColumn, yearColumn = st.columns(2, gap='small')
+    with monthColumn:
+        monthSelection = st.selectbox(
+            "Mês",
+            options= sorted(AccountingsNotificationContent['Mês'].unique().tolist()),
+            placeholder="Selecione um mês...",
+            index=None
+        )
+
+    with yearColumn:
+        yearSelection = st.selectbox(
+            "Ano",
+            options= sorted(AccountingsNotificationContent['Ano'].unique().tolist()),
+            placeholder = "Selecione um ano...",
+            index = None
+        )
+
+    filterArchiveNotifications = AccountingsNotificationContent[['Aviso', 'Data']].where(
+        (AccountingsNotificationContent['Mês'] == monthSelection) &
+        (AccountingsNotificationContent['Ano'] == yearSelection)
+    )
+    st.dataframe(filterArchiveNotifications)
+
 tab1, tab2 = st.tabs(["🧾 PLANILHAS NFSE", "🔎 ACOMPANHAMENTO DE EMPRESAS"])
 
 with tab1:
