@@ -47,6 +47,7 @@ if 'entreprenur' not in st.session_state or not st.session_state['entreprenur']:
                         st.error(" ❌ Senha incorreta.")
                 else:
                     st.error("❌ Usuário não encontrado.")
+    Footer.footer()
     st.stop()
 
 # Page's main configuration after logging in
