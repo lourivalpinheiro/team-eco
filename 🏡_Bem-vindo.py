@@ -15,7 +15,7 @@ Logo("static/teamLogo.png")
 credentialsConnection = ApiConnectionAttributeConnection.spreadsheet_content
 
 # Welcome text
-st.markdown("# 🚀 Team Ecosystem")
+st.markdown("# 🚀 Team One")
 st.caption('Todos os setores, um só time.')
 # Authentication
 with st.form(key='login_form', enter_to_submit=False):
