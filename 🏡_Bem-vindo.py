@@ -8,7 +8,7 @@ from classes.ui.headermenu import HeaderMenu
 import streamlit as st
 
 # Page's main configuration
-Page(name='Bem-vindos', icon='🏡', page_layout='wide')
+Page(name='Bem-vindos', icon='🏡', page_layout='centered')
 Logo("static/teamLogo.png")
 
 # Api connection
