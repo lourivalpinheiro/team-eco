@@ -12,7 +12,7 @@ import plotly.express as px
 
 # Page's second auth
 if 'entreprenur' not in st.session_state or not st.session_state['entreprenur']:
-    Page('Empreendedores Login', icon='👩🏽‍💼', page_layout='centered')
+    Page('Business Room Login', icon='👩🏽‍💼', page_layout='centered')
     Authentication.authenticate()
     # Page's main configuration
     HeaderMenu.hide_menu()
@@ -22,7 +22,7 @@ if 'entreprenur' not in st.session_state or not st.session_state['entreprenur']:
     credentialsConnection = entrepreneursSpreadSheetCredentials
 
     # Page's header
-    st.markdown("# 👩🏽‍💼 Empreendedores")
+    st.markdown("# 👩🏽‍💼 Business Room")
     st.caption('Um espaço seguro e confiável para Empreendedores Team analisarem os dados de seus negócios.')
     st.divider()
     with st.form("entreprenurForm"):
@@ -53,12 +53,12 @@ if 'entreprenur' not in st.session_state or not st.session_state['entreprenur']:
     st.stop()
 
 # Page's main configuration after logging in
-Page(name='Empreendedores Dashboard', icon='👩🏽‍💼', page_layout='wide')
+Page(name='Business Room', icon='👩🏽‍💼', page_layout='wide')
 HeaderMenu.hide_menu()
 Logo('static/teamLogo.png')
 
 # Page's header after logging in
-st.markdown("# 👩🏽‍💼 Empreendedores")
+st.markdown("# 👩🏽‍💼 Business Room")
 st.caption('Um espaço seguro e confiável para Empreendedores Team analisarem os dados de seus negócios.')
 st.divider()
 
