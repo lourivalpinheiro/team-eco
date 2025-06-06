@@ -6,6 +6,7 @@ from classes.ui.logo import Logo
 from classes.ui.footer import Footer
 from classes.ui.headermenu import HeaderMenu
 from classes.backend.authentication import Authentication
+from streamlit_gsheets import GSheetsConnection
 from model import spreadsheet_content
 
 
@@ -21,6 +22,38 @@ Authentication.authenticate()
 st.markdown("# 📂 Arquivo")
 st.caption("Acompanhe a movimentação dos documentos das empresas pelas quais é responsável.")
 st.divider()
+
+# Notifications
+ArchiveNotificationsSpreadSheet = st.connection("gsheets", type=GSheetsConnection)
+ArchiveNotificationContent = ArchiveNotificationsSpreadSheet.read(
+    spreadsheet=st.secrets['database']['spreadsheetArchive'],
+    worksheet=st.secrets['database']['archiveNotifications'],
+)
+
+notificationsAmount = ArchiveNotificationContent['Aviso'].count()
+with st.expander(f"🔔 NOTIFICAÇÕES: {notificationsAmount}"):
+    monthColumn, yearColumn = st.columns(2, gap='small')
+    with monthColumn:
+        monthSelection = st.selectbox(
+            "Mês",
+            options= sorted(ArchiveNotificationContent['Mês'].unique().tolist()),
+            placeholder="Selecione um mês...",
+            index=None
+        )
+
+    with yearColumn:
+        yearSelection = st.selectbox(
+            "Ano",
+            options= sorted(ArchiveNotificationContent['Ano'].unique().tolist()),
+            placeholder = "Selecione um ano...",
+            index = None
+        )
+
+    filterArchiveNotifications = ArchiveNotificationContent[['Aviso', 'Data']].where(
+        (ArchiveNotificationContent['Mês'] == monthSelection) &
+        (ArchiveNotificationContent['Ano'] == yearSelection)
+    )
+    st.dataframe(filterArchiveNotifications)
 
 dataframeAPI = pd.DataFrame(spreadsheet_content)
 
