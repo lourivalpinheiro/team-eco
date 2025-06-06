@@ -5,7 +5,7 @@ from classes.ui.pages import Page
 from classes.ui.logo import Logo
 from classes.ui.footer import Footer
 from classes.ui.headermenu import HeaderMenu
-from model import *
+import streamlit as st
 
 # Page's main configuration
 Page(name='Bem-vindos', icon='🏡', page_layout='wide')

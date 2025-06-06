@@ -86,6 +86,14 @@ with tab2:
             st.markdown('''
                         Agora você pode filtrar o acompanhamento do setor de Arquivo por competência. 
                         ''')
+
+        # Companies follow up
+        with st.expander(label="Acompanhamento de empresas"):
+            st.write("05/06/2025")
+            st.image("static/companiesFollowUp.png")
+            st.markdown('''
+                            Fique por dentro do progresso das atividades para fechamento. 
+                            ''')
    
     
 
@@ -104,6 +112,14 @@ with tab2:
                 st.image("static/analisesApp.png")
                 st.markdown('''
                             Agora é possível obter dados a respeito da usabilidade do aplicativo.
+                            ''')
+
+            ## Entrepreneurs' area
+            with st.expander(label="Empreendedores"):
+                st.write("04/06/2025")
+                st.image("static/employeeArea.png")
+                st.markdown('''
+                            Um espaço seguro e confiável para Empreendedores Team analisarem os dados de seus negócios.
                             ''')
             
       

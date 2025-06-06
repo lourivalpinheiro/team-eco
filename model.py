@@ -24,8 +24,8 @@ usersAmountData = {
 }
 usersAmount = pd.DataFrame(usersAmountData)
 
+# Archive spreadsheet
 conn = st.connection("gsheets", type=GSheetsConnection)
 spreadsheet_content = conn.read(
     spreadsheet=st.secrets['database']['spreadsheetArchive']
 )
-
