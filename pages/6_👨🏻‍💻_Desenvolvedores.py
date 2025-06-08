@@ -20,11 +20,11 @@ st.caption("Conheça o time de desenvolvedores e fique por dentro das atualizaç
 st.divider()
 
 # Tabs
-tab1, tab2 = st.tabs(["👾 TIME", "📰 DEV NEWS"])
+tab1, tab2 = st.tabs(["TIME", "DEV NEWS"])
 
 with tab1:
     st.caption("Conheça o time de desenvolvedores.")
-    with st.expander(label="☕ NETO PINHEIRO"):
+    with st.expander(label="NETO PINHEIRO"):
         netoPicture, netoText = st.columns([1, 2])
         with netoPicture:
             st.image("static/netopinheiro.jpeg", width=200, caption='Team One Founder')

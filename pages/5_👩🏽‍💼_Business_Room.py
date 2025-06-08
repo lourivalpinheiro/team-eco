@@ -129,13 +129,13 @@ with tab2:
     employeeColumn, productColumn = st.columns(2, gap='medium')
     with employeeColumn:
         groupedfiltereddf = filtered_df.groupby('colaborador', as_index=False)['valor'].sum()
-        employeeChart = px.bar(groupedfiltereddf, x='colaborador', y='valor', color_discrete_sequence=['red'], title='Total de vendas por colaborador (R$)')
+        employeeChart = px.bar(groupedfiltereddf, x='colaborador', y='valor', color_discrete_sequence=['red'], title='Total de vendas por colaborador (R$)', text_auto=True)
         with st.container(height=490):
             st.plotly_chart(employeeChart)
 
     with productColumn:
         productGroupedFilteredDf = filtered_df.groupby('produto', as_index=False)['quantidade'].sum()
-        productChart = px.bar(productGroupedFilteredDf, x='produto', y='quantidade', color_discrete_sequence=['red'], title='Produto mais vendido')
+        productChart = px.bar(productGroupedFilteredDf, x='produto', y='quantidade', color_discrete_sequence=['red'], title='Produto mais vendido', text_auto=True)
         with st.container(height=490):
             st.plotly_chart(productChart)
 
