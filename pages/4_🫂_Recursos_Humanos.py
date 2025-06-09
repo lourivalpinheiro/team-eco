@@ -20,4 +20,9 @@ st.divider()
 # Page's content
 st.info("# 🚧 Em desenvolvimento")
 
+with st.sidebar:
+    logout = st.button("SAIR")
+    if logout:
+        Authentication.logout()
+
 Footer.footer()
