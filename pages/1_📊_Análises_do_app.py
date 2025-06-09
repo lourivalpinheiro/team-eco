@@ -15,15 +15,18 @@ Logo("static/teamLogo.png")
 # Login state
 Authentication.authenticate()
 
-# Page's content
-st.markdown('# 📊 Análises do app')
-st.divider()
-with st.container(height=490):
-    st.plotly_chart(usersAmountFig)
 
-with st.sidebar:
-    logout = st.button("SAIR")
-    if logout:
-        Authentication.logout()
+if st.session_state.get("authenticated", False):
+    # Page's content
+    st.markdown('# 📊 Análises do app')
+    st.divider()
+    with st.container(height=490):
+        st.plotly_chart(usersAmountFig)
+    with st.sidebar:
+        logout = st.button("SAIR")
+        if logout:
+            Authentication.logout()
+else:
+    st.warning("⚠️ Você precisa estar logado para acessar esta página.")
 
 Footer.footer()
