@@ -23,7 +23,7 @@ if st.session_state.get("authenticated", False):
 
 
     if "accounting_notifications" not in st.session_state:
-        ArchiveApiConnection.get_accountings_notifications()
+        st.session_state['accounting_notifications'] = ArchiveApiConnection.get_accountings_notifications()
 
     notification_df = st.session_state["accounting_notifications"]
 
