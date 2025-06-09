@@ -5,6 +5,7 @@ from classes.ui.pages import Page
 from classes.ui.logo import Logo
 from classes.ui.footer import Footer
 from classes.ui.headermenu import HeaderMenu
+from classes.ui.textelement import TextElement
 import streamlit as st
 
 # Page configuration
@@ -12,8 +13,8 @@ Page(name='Bem-vindos', icon='🏡', page_layout='centered')
 Logo("static/teamLogo.png")
 
 # Welcome message
-st.markdown("# 🚀 Team One")
-st.caption('Todos os setores, um só time.')
+TextElement.write("# 🚀 Team One")
+TextElement.write_caption('Todos os setores, um só time.')
 
 # Login form
 with st.form(key='login_form', enter_to_submit=False):
@@ -36,7 +37,7 @@ with st.form(key='login_form', enter_to_submit=False):
 
                 if senha_digitada == senha_salva:
                     st.session_state['authenticated'] = True
-                    switch_page("pages/3_📝_Contábil.py")  # ajuste conforme o nome real da página
+                    switch_page("pages/3_📝_Contábil.py")
                 else:
                     st.error("❌ Senha incorreta.")
             else:

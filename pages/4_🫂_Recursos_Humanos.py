@@ -6,6 +6,8 @@ from classes.ui.footer import Footer
 from classes.backend.authentication import Authentication
 import streamlit as st
 
+from classes.ui.textelement import TextElement
+
 # Page's instance
 Page(name="Recursos Humanos", icon="🫂", page_layout="wide")
 HeaderMenu.hide_menu()
@@ -13,9 +15,9 @@ Logo("static/teamLogo.png")
 Authentication.authenticate()
 
 # Page's header
-st.markdown("# 🫂 Recursos Humanos")
-st.caption("Encontre comunicados oficiais, informações sobre setores e mais.")
-st.divider()
+TextElement.write("# 🫂 Recursos Humanos")
+TextElement.write_caption("Encontre comunicados oficiais, informações sobre setores e mais.")
+TextElement.write("---")
 
 # Page's content
 st.info("# 🚧 Em desenvolvimento")

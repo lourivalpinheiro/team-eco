@@ -5,6 +5,7 @@ from classes.ui.logo import Logo
 from classes.ui.footer import Footer
 from classes.ui.headermenu import HeaderMenu
 from classes.backend.authentication import Authentication
+from classes.ui.textelement import TextElement
 
 # Page's main configuration
 Page(name="Desenvolvedores", icon="👨🏻‍💻", page_layout="wide")
@@ -15,24 +16,24 @@ Logo("static/teamLogo.png")
 Authentication.authenticate()
 
 # Page's content
-st.markdown("# 👨🏻‍💻 Desenvolvedores")
-st.caption("Conheça o time de desenvolvedores e fique por dentro das atualizações do projeto.")
-st.divider()
+TextElement.write("# 👨🏻‍💻 Desenvolvedores")
+TextElement.write_caption("Conheça o time de desenvolvedores e fique por dentro das atualizações do projeto.")
+TextElement.write("---")
 
 # Tabs
 tab1, tab2 = st.tabs(["TIME", "DEV NEWS"])
 
 with tab1:
-    st.caption("Conheça o time de desenvolvedores.")
+    TextElement.write_caption("Conheça o time de desenvolvedores.")
     with st.expander(label="NETO PINHEIRO"):
         netoPicture, netoText = st.columns([1, 2])
         with netoPicture:
             st.image("static/netopinheiro.jpeg", width=200, caption='Team One Founder')
         with netoText:
-            st.markdown("## 🤖 Cientista de Dados")
-            st.caption("Apaixonado por transformar dados em soluções reais para negócios.")
-            st.divider()
-            st.write('''
+            TextElement.write("## 🤖 Cientista de Dados")
+            TextElement.write_caption("Apaixonado por transformar dados em soluções reais para negócios.")
+            TextElement.write("---")
+            TextElement.write('''
                     Olá! Meu nome é Neto Pinheiro, tenho 25 anos e sou natural de Palmares, Pernambuco, Brasil.
 
                     Atualmente, estou construindo o caminho à minha carreira como Cientista de Dados, desenvolvendo meu Domínio de Negócio em Contabilidade com objetivo de projetar soluções robustas, escaláveis e orientadas a resultados, que contribuam diretamente para a resolução de problemas e a melhoria de processos nas empresas. Acredito no poder dos dados como ferramenta estratégica, capaz de gerar valor e inovação em diferentes setores.
@@ -56,7 +57,7 @@ with tab1:
             st.link_button("PORTFOLIO", url="https://ltpneto.streamlit.app/")
 
 with tab2:
-    st.caption("Novidades do sistema.")
+    TextElement.write_caption("Novidades do sistema.")
     # News
     
     leftSide, rightSide = st.columns(2, gap="small")
@@ -64,34 +65,34 @@ with tab2:
     with leftSide:
         ## Navigation Bar
         with st.expander(label="Barra de navegação"):
-            st.write("09/05/2025")
+            TextElement.write("09/05/2025")
             st.image("static/navigationBar.png")
-            st.markdown('''
+            TextElement.write('''
                         Agora você pode navegar entre as páginas do sistema através da barra de navegação na parte superior da tela.
                         Isso facilita a navegação e torna a sua experiência mais intuitiva. Que tal compartilhar essa novidade com a galera?
                         ''')
 
         # Archive follow-up
         with st.expander(label="Acompanhamento do setor de Arquivo"):
-                st.write("14/05/2025")
+                TextElement.write("14/05/2025")
                 st.image("static/archivespreadsheet.png")
-                st.markdown('''
+                TextElement.write('''
                             Agora você pode acompanhar a movimentação das suas empresas e ir ao setor de arquivo sabendo exatamente o que deseja coletar.
                             ''')
 
         # Archive filter
         with st.expander(label="Filtro do acompanhamento do setor de Arquivo"):
-            st.write("02/06/2025")
+            TextElement.write("02/06/2025")
             st.image("static/archiveFilter.png")
-            st.markdown('''
+            TextElement.write('''
                         Agora você pode filtrar o acompanhamento do setor de Arquivo por competência. 
                         ''')
 
         # Companies follow up
         with st.expander(label="Acompanhamento de empresas"):
-            st.write("05/06/2025")
+            TextElement.write("05/06/2025")
             st.image("static/companiesFollowUp.png")
-            st.markdown('''
+            TextElement.write('''
                             Fique por dentro do progresso das atividades para fechamento. 
                             ''')
    
@@ -100,9 +101,9 @@ with tab2:
     with rightSide:
         # Authentication
             with st.expander(label="Autenticação"):
-                st.write("14/05/2025")
+                TextElement.write("14/05/2025")
                 st.image("static/authentication.png")
-                st.markdown('''
+                TextElement.write('''
                             A segurança agora é garantida! Autenticação foi inserida com sucesso.
                             ''')
     
@@ -116,17 +117,17 @@ with tab2:
 
             ## Entrepreneurs' area
             with st.expander(label="Empreendedores"):
-                st.write("04/06/2025")
+                TextElement.write("04/06/2025")
                 st.image("static/employeeArea.png")
-                st.markdown('''
+                TextElement.write('''
                             Um espaço seguro e confiável para Empreendedores Team analisarem os dados de seus negócios.
                             ''')
 
             ## Notifications
             with st.expander(label="Notificações"):
-                st.write("05/06/2025")
+                TextElement.write("05/06/2025")
                 st.image("static/notifications.png")
-                st.markdown('''
+                TextElement.write('''
                             Cada aba de setor recebeu a barra de notificações. Fique por dentro dos principais avisos.
                             ''')
             

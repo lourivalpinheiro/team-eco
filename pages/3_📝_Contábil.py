@@ -6,6 +6,7 @@ from classes.ui.logo import Logo
 from classes.ui.footer import Footer
 from classes.ui.headermenu import HeaderMenu
 from classes.backend.authentication import Authentication
+from classes.ui.textelement import TextElement
 from model import ArchiveApiConnection
 from model import df
 
@@ -18,8 +19,8 @@ Authentication.authenticate()
 
 if st.session_state.get("authenticated", False):
 
-    st.markdown("# 📝 Contábil")
-    st.caption("Utilize as ferramentas desenvolvidas para o setor.")
+    TextElement.write("# 📝 Contábil")
+    TextElement.write_caption("Utilize as ferramentas desenvolvidas para o setor.")
 
     notification_df = ArchiveApiConnection.get_accountings_notifications()
 
@@ -102,8 +103,8 @@ if st.session_state.get("authenticated", False):
             st.dataframe(st.session_state["df"])
 
     with tab2:
-        st.markdown('## Acompanhamento de empresas')
-        st.caption('Fique por dentro do progresso das atividades para fechamento.')
+        TextElement.write('## Acompanhamento de empresas')
+        TextElement.write_caption('Fique por dentro do progresso das atividades para fechamento.')
         st.info('**OBS.:** todos os filtros precisam ter uma opção selecionada para funcionar.', icon='ℹ️')
         st.divider()
 

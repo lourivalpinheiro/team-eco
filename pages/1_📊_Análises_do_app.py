@@ -4,6 +4,7 @@ from classes.ui.pages import Page
 from classes.ui.logo import Logo
 from classes.ui.footer import Footer
 from classes.ui.headermenu import HeaderMenu
+from classes.ui.textelement import TextElement
 from classes.backend.authentication import Authentication
 from classes.backend.data.analysis.plots import usersAmountFig
 
@@ -18,7 +19,7 @@ Authentication.authenticate()
 
 if st.session_state.get("authenticated", False):
     # Page's content
-    st.markdown('# 📊 Análises do app')
+    TextElement.write('# 📊 Análises do app')
     st.divider()
     with st.container(height=490):
         st.plotly_chart(usersAmountFig)

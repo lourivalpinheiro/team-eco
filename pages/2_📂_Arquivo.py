@@ -4,6 +4,7 @@ from classes.ui.pages import Page
 from classes.ui.logo import Logo
 from classes.ui.footer import Footer
 from classes.ui.headermenu import HeaderMenu
+from classes.ui.textelement import TextElement
 from classes.backend.authentication import Authentication
 from model import ArchiveApiConnection
 
@@ -14,9 +15,9 @@ Logo("static/teamLogo.png")
 
 Authentication.authenticate()
 
-st.markdown("# 📂 Arquivo")
-st.caption("Acompanhe a movimentação dos documentos das empresas pelas quais é responsável.")
-st.divider()
+TextElement.write("# 📂 Arquivo")
+TextElement.write_caption("Acompanhe a movimentação dos documentos das empresas pelas quais é responsável.")
+st.write("---")
 
 
 ArchiveNotificationContent = ArchiveApiConnection.get_spreadsheet_notifications()

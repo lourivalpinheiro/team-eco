@@ -3,6 +3,7 @@ from classes.ui.pages import Page
 from classes.ui.headermenu import HeaderMenu
 from classes.ui.logo import Logo
 from classes.ui.footer import Footer
+from classes.ui.textelement import TextElement
 from model import ArchiveApiConnection
 import streamlit as st
 import plotly.express as px
@@ -13,9 +14,9 @@ if 'entreprenur' not in st.session_state or not st.session_state['entreprenur']:
     HeaderMenu.hide_menu()
     Logo('static/teamLogo.png')
 
-    st.markdown("# 👩🏽‍💼 Business Room")
-    st.caption('Um espaço seguro e confiável para Empreendedores Team analisarem os dados de seus negócios.')
-    st.divider()
+    TextElement.write("# 👩🏽‍💼 Business Room")
+    TextElement.write_caption('Um espaço seguro e confiável para Empreendedores Team analisarem os dados de seus negócios.')
+    TextElement.write("---")
 
     with st.form("entreprenurForm"):
         entreprenurUsername = st.text_input("USUÁRIO")
@@ -49,9 +50,9 @@ Page(name='Business Room', icon='👩🏽‍💼', page_layout='wide')
 HeaderMenu.hide_menu()
 Logo('static/teamLogo.png')
 
-st.markdown("# 👩🏽‍💼 Business Room")
-st.caption('Um espaço seguro e confiável para Empreendedores Team analisarem os dados de seus negócios.')
-st.divider()
+TextElement.write("# 👩🏽‍💼 Business Room")
+TextElement.write_caption('Um espaço seguro e confiável para Empreendedores Team analisarem os dados de seus negócios.')
+TextElement.write("---")
 
 
 if 'entrepreneurs' not in st.session_state:
