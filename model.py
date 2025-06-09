@@ -24,8 +24,63 @@ usersAmountData = {
 }
 usersAmount = pd.DataFrame(usersAmountData)
 
-# Archive spreadsheet
-conn = st.connection("gsheets", type=GSheetsConnection)
-spreadsheet_content = conn.read(
-    spreadsheet=st.secrets['database']['spreadsheetArchive']
-)
+class ArchiveApiConnection:
+    @staticmethod
+    @st.cache_data(ttl=600)
+    def get_spreadsheet_notifications():
+        conn = st.connection("gsheets", type=GSheetsConnection)
+        spreadsheet_content = conn.read(
+            spreadsheet=st.secrets['database']['spreadsheetArchive'],
+            worksheet=st.secrets['database']['archiveNotifications'],
+        )
+        return spreadsheet_content
+
+    @staticmethod
+    @st.cache_data(ttl=600)
+    def get_archive_spreadsheet_content():
+        conn = st.connection("gsheets", type=GSheetsConnection)
+        spreadsheet_content = conn.read(
+            spreadsheet=st.secrets['database']['spreadsheetArchive']
+        )
+        return spreadsheet_content
+
+    @staticmethod
+    @st.cache_data(ttl=600)
+    def get_accountings_notifications():
+        conn = st.connection("gsheets", type=GSheetsConnection)
+        st.session_state["accounting_notifications"] = conn.read(
+            spreadsheet=st.secrets['database']['accountingsSpreadSheet'],
+            worksheet=st.secrets['database']['accountingsNotifications'],
+        )
+
+    @staticmethod
+    @st.cache_data(ttl=600)
+    def get_companies_followup():
+        companiesFollowUpConn = st.connection("gsheets", type=GSheetsConnection)
+        companiesFollowUpContent = companiesFollowUpConn.read(
+            spreadsheet=st.secrets['database']['accountingsSpreadSheet'],
+            worksheet=st.secrets['database']['companiesFollowUpSpreadsheet']
+        )
+        return companiesFollowUpContent
+
+    @staticmethod
+    @st.cache_data(ttl=600)
+    def get_entrepreneurs_credentials():
+        # Entrepreneurs' spreadsheet credentials
+        entrepreneursCredentialsConn = st.connection("gsheets", type=GSheetsConnection)
+        entrepreneursSpreadSheetCredentials = entrepreneursCredentialsConn.read(
+            spreadsheet=st.secrets['database']['mahinaSpreadsheet'],
+            worksheet=st.secrets['database']['entrepreneursSpreadsheet']
+        )
+        return entrepreneursSpreadSheetCredentials
+
+    @staticmethod
+    @st.cache_data(ttl=600)
+    def get_entrepreneurs_content():
+        # Entrepreneurs' spreadsheet
+        entrepreneursConn = st.connection("gsheets", type=GSheetsConnection)
+        entrepreneursSpreadSheet = entrepreneursConn.read(
+            spreadsheet=st.secrets['database']['mahinaSpreadsheet']
+        )
+        return entrepreneursSpreadSheet
+

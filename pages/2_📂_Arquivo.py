@@ -1,34 +1,25 @@
-# Importing necessary libraries
-import pandas as pd
+# Importing necessary modules
 import streamlit as st
 from classes.ui.pages import Page
 from classes.ui.logo import Logo
 from classes.ui.footer import Footer
 from classes.ui.headermenu import HeaderMenu
 from classes.backend.authentication import Authentication
-from streamlit_gsheets import GSheetsConnection
-from model import spreadsheet_content
+from model import ArchiveApiConnection
 
 
-# Page's main configuration
 Page(name="Arquivo", icon="📂", page_layout="wide")
 HeaderMenu.hide_menu()
 Logo("static/teamLogo.png")
 
-# Login state
 Authentication.authenticate()
 
-# Page's content
 st.markdown("# 📂 Arquivo")
 st.caption("Acompanhe a movimentação dos documentos das empresas pelas quais é responsável.")
 st.divider()
 
-# Notifications
-ArchiveNotificationsSpreadSheet = st.connection("gsheets", type=GSheetsConnection)
-ArchiveNotificationContent = ArchiveNotificationsSpreadSheet.read(
-    spreadsheet=st.secrets['database']['spreadsheetArchive'],
-    worksheet=st.secrets['database']['archiveNotifications'],
-)
+
+ArchiveNotificationContent = ArchiveApiConnection.get_spreadsheet_notifications()
 
 notificationsAmount = ArchiveNotificationContent['Aviso'].count()
 with st.expander(f"🔔 NOTIFICAÇÕES: {notificationsAmount}"):
@@ -45,8 +36,8 @@ with st.expander(f"🔔 NOTIFICAÇÕES: {notificationsAmount}"):
         yearSelection = st.selectbox(
             "Ano",
             options= sorted(ArchiveNotificationContent['Ano'].unique().tolist()),
-            placeholder = "Selecione um ano...",
-            index = None
+            placeholder="Selecione um ano...",
+            index=None
         )
 
     filterArchiveNotifications = ArchiveNotificationContent[['Aviso', 'Data']].where(
@@ -55,7 +46,8 @@ with st.expander(f"🔔 NOTIFICAÇÕES: {notificationsAmount}"):
     )
     st.dataframe(filterArchiveNotifications)
 
-dataframeAPI = pd.DataFrame(spreadsheet_content)
+
+dataframeAPI = ArchiveApiConnection.get_archive_spreadsheet_content()  # ou outro df com base na planilha
 
 if 'dataframeAPI' not in st.session_state:
     st.session_state['dataframeAPI'] = dataframeAPI
@@ -70,15 +62,10 @@ selected = st.selectbox(
     key='archiveSelect'
 )
 
-# Archive Spreadsheet
 filtered_df = dataframeAPI[dataframeAPI['COMPETÊNCIA'] == selected]
 st.dataframe(filtered_df)
 
-if 'filtered_df' not in st.session_state:
-    st.session_state['filtered_df'] = filtered_df
-
-if st.session_state['archiveSelect'] == options:
-    st.session_state['dataframeAPI'] = options
+st.session_state['filtered_df'] = filtered_df
 
 with st.sidebar:
     logout = st.button("SAIR")
