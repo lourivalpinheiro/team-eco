@@ -21,11 +21,7 @@ if st.session_state.get("authenticated", False):
     st.markdown("# 📝 Contábil")
     st.caption("Utilize as ferramentas desenvolvidas para o setor.")
 
-
-    if "accounting_notifications" not in st.session_state:
-        st.session_state['accounting_notifications'] = ArchiveApiConnection.get_accountings_notifications()
-
-    notification_df = st.session_state["accounting_notifications"]
+    notification_df = ArchiveApiConnection.get_accountings_notifications()
 
     notificationsAmount = notification_df['Aviso'].count()
     with st.expander(f"🔔 NOTIFICAÇÕES: {notificationsAmount}"):
