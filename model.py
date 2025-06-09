@@ -48,10 +48,11 @@ class ArchiveApiConnection:
     @st.cache_data(ttl=600)
     def get_accountings_notifications():
         conn = st.connection("gsheets", type=GSheetsConnection)
-        st.session_state["accounting_notifications"] = conn.read(
+        notifications_content = conn.read(
             spreadsheet=st.secrets['database']['accountingsSpreadSheet'],
             worksheet=st.secrets['database']['accountingsNotifications'],
         )
+        return notifications_content
 
     @staticmethod
     @st.cache_data(ttl=600)
