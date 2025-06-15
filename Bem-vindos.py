@@ -37,7 +37,7 @@ with st.form(key='login_form', enter_to_submit=False):
 
                 if senha_digitada == senha_salva:
                     st.session_state['authenticated'] = True
-                    switch_page("pages/3_📝_Contábil.py")
+                    switch_page("pages/2_Contábil.py")
                 else:
                     st.error("❌ Senha incorreta.")
             else:

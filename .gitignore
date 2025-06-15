@@ -2,3 +2,4 @@ env/
 .streamlit/
 __pycache__/
 .idea/
+trainingdata/
