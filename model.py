@@ -85,3 +85,12 @@ class ArchiveApiConnection:
         )
         return entrepreneursSpreadSheet
 
+    @staticmethod
+    @st.cache_data(ttl=600)
+    def get_documentation_followup_content():
+        # Documentation's follow up
+        documentation_followup_conn = st.connection("gsheets", type=GSheetsConnection)
+        documentation_spreadsheet = documentation_followup_conn.read(
+            spreadsheet=st.secrets['database']['documentationFollowUp']
+        )
+        return documentation_spreadsheet

@@ -48,7 +48,7 @@ if st.session_state.get("authenticated", False):
         st.dataframe(filterArchiveNotifications)
 
 
-    tab1, tab2 = st.tabs(["PLANILHAS NFSE", "ACOMPANHAMENTO DE EMPRESAS"])
+    tab1, tab2 = st.tabs(["PLANILHAS NFSE", "ACOMPANHAMENTOS"])
 
     with tab1:
         if 'df' not in st.session_state:
@@ -102,41 +102,78 @@ if st.session_state.get("authenticated", False):
         with dataframe:
             st.dataframe(st.session_state["df"])
 
+
     with tab2:
-        TextElement.write('## Acompanhamento de empresas')
-        TextElement.write_caption('Fique por dentro do progresso das atividades para fechamento.')
-        st.info('**OBS.:** todos os filtros precisam ter uma opção selecionada para funcionar.', icon='ℹ️')
-        st.divider()
+        companiesFolloUpTab, documentationFollowUpTab = st.tabs(["TRIMESTRE", "DOCUMENTAÇÃO FALTANTE"])
+        with companiesFolloUpTab:
+            TextElement.write('## Acompanhamento de empresas')
+            TextElement.write_caption('Fique por dentro do progresso das atividades para fechamento.')
+            st.info('**OBS.:** todos os filtros precisam ter uma opção selecionada para funcionar.', icon='ℹ️')
+            st.divider()
 
-        companies_df = ArchiveApiConnection.get_companies_followup()
+            companies_df = ArchiveApiConnection.get_companies_followup()
 
-        companiesOptionsColumn, employeeOptionsColumn, statusOptions = st.columns(3, gap="medium")
+            companiesOptionsColumn, employeeOptionsColumn, statusOptions = st.columns(3, gap="medium")
 
-        with st.popover('LEGENDA'):
-            st.markdown("""
-                **🏢 EMPRESA**: empresa a qual deseja acompanhar;  
-                **🙋🏽‍♀️ RESPONSÁVEL**: responsável pela empresa;  
-                **🏷️ STATUS**: situação da operação realizada.
-            """)
+            with st.popover('LEGENDA'):
+                st.markdown("""
+                    **🏢 EMPRESA**: empresa a qual deseja acompanhar;  
+                    **🙋🏽‍♀️ RESPONSÁVEL**: responsável pela empresa;  
+                    **🏷️ STATUS**: situação da operação realizada.
+                """)
 
-        with companiesOptionsColumn:
-            companiesOptions = sorted(companies_df['empresa'].str.strip().dropna().unique().tolist())
-            selectedCompany = st.selectbox('Empresa', options=companiesOptions, placeholder="Selecione...", index=None)
+            with companiesOptionsColumn:
+                companiesOptions = sorted(companies_df['empresa'].str.strip().dropna().unique().tolist())
+                selectedCompany = st.selectbox('Empresa', options=companiesOptions, placeholder="Selecione...", index=None)
 
-        with employeeOptionsColumn:
-            employeeOptions = sorted(companies_df['responsavel'].str.strip().dropna().unique().tolist())
-            selectedEmployee = st.selectbox('Responsável', options=employeeOptions, placeholder="Selecione...", index=None)
+            with employeeOptionsColumn:
+                employeeOptions = sorted(companies_df['responsavel'].str.strip().dropna().unique().tolist())
+                selectedEmployee = st.selectbox('Responsável', options=employeeOptions, placeholder="Selecione...", index=None)
 
-        with statusOptions:
-            statusOptions = sorted(companies_df['status'].str.strip().dropna().unique().tolist())
-            selectedStatus = st.selectbox('Status', options=statusOptions, placeholder="Selecione...", index=None)
+            with statusOptions:
+                statusOptions = sorted(companies_df['status'].str.strip().dropna().unique().tolist())
+                selectedStatus = st.selectbox('Status', options=statusOptions, placeholder="Selecione...", index=None)
 
-        filtered = companies_df[
-            (companies_df['empresa'] == selectedCompany) &
-            (companies_df['responsavel'] == selectedEmployee) &
-            (companies_df['status'] == selectedStatus)
-        ]
-        st.dataframe(filtered)
+            filtered = companies_df[
+                (companies_df['empresa'] == selectedCompany) &
+                (companies_df['responsavel'] == selectedEmployee) &
+                (companies_df['status'] == selectedStatus)
+            ]
+            st.dataframe(filtered)
+
+        with documentationFollowUpTab:
+            TextElement.write('## Documentação faltante')
+            TextElement.write_caption('Documentações não enviadas pelos clientes ou não solicitadas.')
+            st.info('**OBS.:** todos os filtros precisam ter uma opção selecionada para funcionar.', icon='ℹ️')
+            st.divider()
+
+            documentation_df = ArchiveApiConnection.get_documentation_followup_content()
+
+            companiesOptionsColumn, competenceColumn = st.columns(2, gap="medium")
+
+            with st.popover('LEGENDA'):
+                st.markdown("""
+                                **EMPRESA**: empresa a qual deseja acompanhar; 
+                                
+                                **COMPETÊNCIA**: trimestre a qual a documentação pertence.
+                            """)
+
+            with companiesOptionsColumn:
+                companiesOptionsDoc = sorted(documentation_df['empresa'].str.strip().dropna().unique().tolist())
+                selectedCompany = st.selectbox('Empresas', options=companiesOptionsDoc, placeholder="Selecione...",
+                                               index=None)
+
+            with competenceColumn:
+                competenceOptions = sorted(documentation_df['competencia'].str.strip().dropna().unique().tolist())
+                selectedCompetence = st.selectbox('Competência', options=competenceOptions, placeholder="Selecione...", index=None)
+
+
+            filtered = documentation_df[
+                (documentation_df['empresa'] == selectedCompany) &
+                (documentation_df['competencia'] == selectedCompetence)
+                ]
+            st.dataframe(filtered)
+
 
 else:
     st.warning("⚠️ Você precisa estar logado para acessar esta página.")
