@@ -25,4 +25,4 @@ class Authentication:
         Updates the application's session state and goes back to blocking other pages' content rendering, requiring authentication once more.
         """
         st.session_state["authenticated"] = False
-        switch_page("🏡_Bem_vindos.py")
+        switch_page("🏡_Bem-vindo.py")
