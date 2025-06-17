@@ -32,7 +32,7 @@ class Footer:
        </style>
 
        <div class="footer-custom">
-           © <strong>TEAM CONTABILIDADE<strong/> - All rights reserved
+           © <strong>TEAM CONTABILIDADE<strong/> - Todos os direitos reservados
        </div>
        """
 
