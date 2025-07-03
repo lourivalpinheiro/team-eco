@@ -1,13 +1,14 @@
 # Importing necessary modules
 import streamlit as st
 import pandas as pd
+import asyncio
 from classes.ui.pages import Page
 from classes.ui.logo import Logo
 from classes.ui.footer import Footer
 from classes.ui.headermenu import HeaderMenu
 from classes.backend.authentication import Authentication
 from classes.ui.textelement import TextElement
-from model import ArchiveApiConnection
+from model import ApiConnection
 from model import df
 
 
@@ -22,7 +23,9 @@ if st.session_state.get("authenticated", False):
     TextElement.write("# 📝 Contábil")
     TextElement.write_caption("Utilize as ferramentas desenvolvidas para o setor.")
 
-    notification_df = ArchiveApiConnection.get_accountings_notifications()
+    # Aqui usa o async só para as notificações contábeis
+    with st.spinner("🔄 Carregando notificações..."):
+        notification_df = asyncio.run(ApiConnection.get_accountings_notifications_async())
 
     notificationsAmount = notification_df['Aviso'].count()
     with st.expander(f"🔔 NOTIFICAÇÕES: {notificationsAmount}"):
@@ -111,14 +114,14 @@ if st.session_state.get("authenticated", False):
             st.info('**OBS.:** todos os filtros precisam ter uma opção selecionada para funcionar.', icon='ℹ️')
             st.divider()
 
-            companies_df = ArchiveApiConnection.get_companies_followup()
+            companies_df = ApiConnection.get_companies_followup()
 
             companiesOptionsColumn, employeeOptionsColumn, statusOptions = st.columns(3, gap="medium")
 
             with st.popover('LEGENDA'):
                 st.markdown("""
-                    **🏢 EMPRESA**: empresa a qual deseja acompanhar;  
-                    **🙋🏽‍♀️ RESPONSÁVEL**: responsável pela empresa;  
+                    **🏢 EMPRESA**: empresa a qual deseja acompanhar;
+                    **🙋🏽‍♀️ RESPONSÁVEL**: responsável pela empresa;
                     **🏷️ STATUS**: situação da operação realizada.
                 """)
 
@@ -147,14 +150,14 @@ if st.session_state.get("authenticated", False):
             st.info('**OBS.:** todos os filtros precisam ter uma opção selecionada para funcionar.', icon='ℹ️')
             st.divider()
 
-            documentation_df = ArchiveApiConnection.get_documentation_followup_content()
+            documentation_df = ApiConnection.get_documentation_followup_content()
 
             companiesOptionsColumn, competenceColumn = st.columns(2, gap="medium")
 
             with st.popover('LEGENDA'):
                 st.markdown("""
-                                **EMPRESA**: empresa a qual deseja acompanhar; 
-                                
+                                **EMPRESA**: empresa a qual deseja acompanhar;
+
                                 **COMPETÊNCIA**: trimestre a qual a documentação pertence.
                             """)
 

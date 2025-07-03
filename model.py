@@ -1,4 +1,5 @@
 # Importing necessary libraries
+import asyncio
 import pandas as pd
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
@@ -24,73 +25,94 @@ usersAmountData = {
 }
 usersAmount = pd.DataFrame(usersAmountData)
 
-class ArchiveApiConnection:
+class ApiConnection:
     @staticmethod
-    @st.cache_data(ttl=600)
-    def get_spreadsheet_notifications():
-        conn = st.connection("gsheets", type=GSheetsConnection)
-        spreadsheet_content = conn.read(
-            spreadsheet=st.secrets['database']['spreadsheetArchive'],
-            worksheet=st.secrets['database']['archiveNotifications'],
-        )
-        return spreadsheet_content
+    async def get_spreadsheet_notifications_async() -> pd.DataFrame:
+        def sync_read():
+            conn = st.connection("gsheets", type=GSheetsConnection)
+            return conn.read(
+                spreadsheet=st.secrets['database']['spreadsheetArchive'],
+                worksheet=st.secrets['database']['archiveNotifications'],
+            )
+        content = await asyncio.to_thread(sync_read)
+        return pd.DataFrame(content)
 
     @staticmethod
-    @st.cache_data(ttl=600)
-    def get_archive_spreadsheet_content():
-        conn = st.connection("gsheets", type=GSheetsConnection)
-        spreadsheet_content = conn.read(
-            spreadsheet=st.secrets['database']['spreadsheetArchive']
-        )
-        return spreadsheet_content
+    async def get_archive_spreadsheet_content_async() -> pd.DataFrame:
+        def sync_read():
+            conn = st.connection("gsheets", type=GSheetsConnection)
+            return conn.read(
+                spreadsheet=st.secrets['database']['spreadsheetArchive']
+            )
+        content = await asyncio.to_thread(sync_read)
+        return pd.DataFrame(content)
 
     @staticmethod
-    @st.cache_data(ttl=600)
-    def get_accountings_notifications():
+    async def get_accountings_notifications_async() -> pd.DataFrame:
+        spreadsheet = st.secrets['database']['accountingsSpreadSheet']
+        worksheet = st.secrets['database']['accountingsNotifications']
         conn = st.connection("gsheets", type=GSheetsConnection)
-        notifications_content = conn.read(
-            spreadsheet=st.secrets['database']['accountingsSpreadSheet'],
-            worksheet=st.secrets['database']['accountingsNotifications'],
-        )
-        return notifications_content
+
+        def sync_read(spreadsheet, worksheet):
+            return conn.read(spreadsheet=spreadsheet, worksheet=worksheet)
+
+        content = await asyncio.to_thread(sync_read, spreadsheet, worksheet)
+        return pd.DataFrame(content)
 
     @staticmethod
-    @st.cache_data(ttl=600)
-    def get_companies_followup():
-        companiesFollowUpConn = st.connection("gsheets", type=GSheetsConnection)
-        companiesFollowUpContent = companiesFollowUpConn.read(
+    def get_companies_followup() -> pd.DataFrame:
+        conn = st.connection("gsheets", type=GSheetsConnection)
+        content = conn.read(
             spreadsheet=st.secrets['database']['accountingsSpreadSheet'],
             worksheet=st.secrets['database']['companiesFollowUpSpreadsheet']
         )
-        return companiesFollowUpContent
+        return pd.DataFrame(content)
 
     @staticmethod
-    @st.cache_data(ttl=600)
-    def get_entrepreneurs_credentials():
-        # Entrepreneurs' spreadsheet credentials
-        entrepreneursCredentialsConn = st.connection("gsheets", type=GSheetsConnection)
-        entrepreneursSpreadSheetCredentials = entrepreneursCredentialsConn.read(
-            spreadsheet=st.secrets['database']['mahinaSpreadsheet'],
-            worksheet=st.secrets['database']['entrepreneursSpreadsheet']
-        )
-        return entrepreneursSpreadSheetCredentials
-
-    @staticmethod
-    @st.cache_data(ttl=600)
-    def get_entrepreneurs_content():
-        # Entrepreneurs' spreadsheet
-        entrepreneursConn = st.connection("gsheets", type=GSheetsConnection)
-        entrepreneursSpreadSheet = entrepreneursConn.read(
-            spreadsheet=st.secrets['database']['mahinaSpreadsheet']
-        )
-        return entrepreneursSpreadSheet
-
-    @staticmethod
-    @st.cache_data(ttl=600)
-    def get_documentation_followup_content():
-        # Documentation's follow up
-        documentation_followup_conn = st.connection("gsheets", type=GSheetsConnection)
-        documentation_spreadsheet = documentation_followup_conn.read(
+    def get_documentation_followup_content() -> pd.DataFrame:
+        conn = st.connection("gsheets", type=GSheetsConnection)
+        content = conn.read(
             spreadsheet=st.secrets['database']['documentationFollowUp']
         )
-        return documentation_spreadsheet
+        return pd.DataFrame(content)
+
+    @staticmethod
+    async def get_entrepreneurs_credentials_async() -> pd.DataFrame:
+        def sync_read():
+            conn = st.connection("gsheets", type=GSheetsConnection)
+            return conn.read(
+                spreadsheet=st.secrets['database']['mahinaSpreadsheet'],
+                worksheet=st.secrets['database']['entrepreneursSpreadsheet']
+            )
+        content = await asyncio.to_thread(sync_read)
+        return pd.DataFrame(content)
+
+    @staticmethod
+    async def get_entrepreneurs_content_async() -> pd.DataFrame:
+        def sync_read():
+            conn = st.connection("gsheets", type=GSheetsConnection)
+            return conn.read(
+                spreadsheet=st.secrets['database']['mahinaSpreadsheet']
+            )
+        content = await asyncio.to_thread(sync_read)
+        return pd.DataFrame(content)
+
+    @staticmethod
+    async def get_documentation_followup_content_async() -> pd.DataFrame:
+        def sync_read():
+            conn = st.connection("gsheets", type=GSheetsConnection)
+            return conn.read(
+                spreadsheet=st.secrets['database']['documentationFollowUp']
+            )
+        content = await asyncio.to_thread(sync_read)
+        return pd.DataFrame(content)
+
+    @staticmethod
+    async def get_fiscal_async() -> pd.DataFrame:
+        def sync_read():
+            conn = st.connection("gsheets", type=GSheetsConnection)
+            return conn.read(
+                spreadsheet=st.secrets['database']['fiscal']
+            )
+        content = await asyncio.to_thread(sync_read)
+        return pd.DataFrame(content)
