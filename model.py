@@ -116,3 +116,15 @@ class ApiConnection:
             )
         content = await asyncio.to_thread(sync_read)
         return pd.DataFrame(content)
+
+    @staticmethod
+    async def get_fiscal_notifications_async() -> pd.DataFrame:
+        fiscal_notifications_spreadsheet = st.secrets['database']['fiscal']
+        fiscal_notifications_worksheet = st.secrets['database']['notificationsfiscal']
+        conn = st.connection("gsheets", type=GSheetsConnection)
+
+        def sync_read(fiscal_notifications_spreadsheet, worksheet):
+            return conn.read(spreadsheet=fiscal_notifications_spreadsheet, worksheet=fiscal_notifications_worksheet)
+
+        content = await asyncio.to_thread(sync_read, fiscal_notifications_spreadsheet, fiscal_notifications_worksheet)
+        return pd.DataFrame(content)

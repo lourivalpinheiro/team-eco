@@ -105,6 +105,34 @@ if st.session_state.get("authenticated", False):
     TextElement.write_caption("Utilize as ferramentas desenvolvidas para o setor.")
     TextElement.write("---")
 
+    # Carregando notificações com spinner e asyncio
+    with st.spinner("🔄 Carregando notificações..."):
+        ArchiveNotificationContent = asyncio.run(ApiConnection.get_fiscal_notifications_async())
+
+    notificationsAmount = ArchiveNotificationContent['Aviso'].count()
+    with st.expander(f"🔔 NOTIFICAÇÕES: {notificationsAmount}"):
+        monthColumn, yearColumn = st.columns(2, gap='small')
+        with monthColumn:
+            monthSelection = st.selectbox(
+                "Mês",
+                options=sorted(ArchiveNotificationContent['Mês'].unique().tolist()),
+                placeholder="Selecione um mês..."
+            )
+
+        with yearColumn:
+            yearSelection = st.selectbox(
+                "Ano",
+                options=sorted(ArchiveNotificationContent['Ano'].unique().tolist()),
+                placeholder="Selecione um ano..."
+            )
+
+        filterArchiveNotifications = ArchiveNotificationContent[
+            (ArchiveNotificationContent['Mês'] == monthSelection) &
+            (ArchiveNotificationContent['Ano'] == yearSelection)
+            ][['Aviso', 'Data']]
+
+        st.dataframe(filterArchiveNotifications)
+
     TextElement.write("## Consulta de NCMS")
     TextElement.write_caption("Busca NCMS na base de dados.")
     TextElement.write("---")
