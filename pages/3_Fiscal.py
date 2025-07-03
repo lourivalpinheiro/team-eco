@@ -48,7 +48,7 @@ if st.session_state.get("authenticated", False):
 
         st.dataframe(filterArchiveNotifications)
 
-    TextElement.write("## 🔎 Consulta de NCMS")
+    TextElement.write("## Consulta de NCMS")
     TextElement.write_caption("Busca NCMS na base de dados.")
     TextElement.write("---")
 
