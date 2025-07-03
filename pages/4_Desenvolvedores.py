@@ -94,6 +94,14 @@ with tab2:
             TextElement.write('''
                             Fique por dentro do progresso das atividades para fechamento. 
                             ''')
+
+        # NCM search
+        with st.expander(label="Departamento Fiscal"):
+            TextElement.write("02/07/2025")
+            st.image("static/fiscal.png")
+            TextElement.write('''
+                                Departamento Fiscal ganhou um espaço no app, contendo a funcionalidade de busca por NCM. 
+                                ''')
    
     
 
